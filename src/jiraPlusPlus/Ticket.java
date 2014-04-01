@@ -1,13 +1,13 @@
 package jiraPlusPlus;
 
 public class Ticket {
-    private int id;
+    private String id;
 
-    public Ticket(int id) {
+    public Ticket(String id) {
         this.id = id;
     }
 
-    public int getId() {
+    public String getId() {
         return this.id;
     }
 }
