@@ -16,7 +16,7 @@ public class JiraElectronicBoard implements IElectronicBoard {
 
     public void sync() throws Exception {
         for (Ticket ticket : this.tickets) {
-            this.jiraService.updateStatus(ticket.getId(), ticket.getStatus());
+            this.jiraService.transition(ticket.getId(), ticket.getStatus());
         }
     }
 }

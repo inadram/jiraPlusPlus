@@ -23,7 +23,7 @@ public class JiraElectronicBoardTest {
         jeb.populate(tickets);
         jeb.sync();
 
-        Mockito.verify(mockJiraService, Mockito.times(1)).updateStatus("Key0", "Status0");
+        Mockito.verify(mockJiraService, Mockito.times(1)).transition("Key0", "Status0");
     }
 
     @Test
@@ -35,7 +35,7 @@ public class JiraElectronicBoardTest {
         jeb.populate(tickets);
         jeb.sync();
 
-        Mockito.verify(mockJiraService, Mockito.times(20)).updateStatus(Mockito.anyString(), Mockito.anyString());
+        Mockito.verify(mockJiraService, Mockito.times(20)).transition(Mockito.anyString(), Mockito.anyString());
     }
 
     private List<Ticket> createListOfTickets(int count) {

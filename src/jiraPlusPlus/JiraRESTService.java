@@ -1,9 +1,6 @@
 package jiraPlusPlus;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 import java.security.*;
 import java.security.cert.CertificateException;
@@ -22,18 +19,28 @@ public class JiraRESTService implements IJiraService {
         this.serverStorePath = serverStorePath;
     }
 
-    public int updateStatus(String key, String newStatus) throws Exception {
+    public int transition(String key, String transitionId) throws Exception {
         configureSSLFactory();
 
-        URL url =  new URL(jiraUrl + "issue/" + key);
+        URL url =  new URL(jiraUrl + "issue/" + key + "/transitions");
         HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
 
-        con.setRequestMethod("GET");
+        con.setRequestMethod("POST");
+        con.setRequestProperty("Content-Type", "application/json; charset=utf8");
 
+        String data = "{\"update\": {\"comment\": [{\"add\": {\"body\": \"Start progress\" }}]},\"transition\": {\"id\": \"" + transitionId + "\"}}";
+
+        con.setDoOutput(true);
+        DataOutputStream outputStream = new DataOutputStream(con.getOutputStream());
+        outputStream.writeBytes(data);
+        outputStream.flush();
+        outputStream.close();
+
+        int responseCode = con.getResponseCode();
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
         String inputLine;
         StringBuffer response = new StringBuffer();
-
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
         }
@@ -41,7 +48,8 @@ public class JiraRESTService implements IJiraService {
 
         System.out.println(response.toString());
 
-        return con.getResponseCode();
+
+        return responseCode;
     }
 
     private void configureSSLFactory() throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableKeyException, KeyManagementException {
