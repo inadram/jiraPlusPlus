@@ -42,14 +42,14 @@ public class JiraElectronicBoard implements IElectronicBoard {
                 currentStatus = "InProgress";
             } else if (currentStatus == "InProgress") {
                 if (endStatus == "ToDo") {
-                    transitions.offer("5");
+                    transitions.offer("301");
                     currentStatus = "ToDo";
                 } else if (endStatus == "Done") {
-                    transitions.offer("7");
+                    transitions.offer("5");
                     currentStatus = "Done";
                 }
             } else if (currentStatus == "Done") {
-                transitions.offer("9");
+                transitions.offer("3");
                 currentStatus = "InProgress";
             }
         }
