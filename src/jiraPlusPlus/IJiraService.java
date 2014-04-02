@@ -1,5 +1,6 @@
 package jiraPlusPlus;
 
 public interface IJiraService {
-    public int transition(String key, String newStatus) throws Exception;
+    public String getCurrentStatus(String key) throws Exception;
+    public void transition(String key, String transitionId) throws Exception;
 }

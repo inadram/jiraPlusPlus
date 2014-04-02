@@ -6,6 +6,8 @@ import java.security.*;
 import java.security.cert.CertificateException;
 import javax.net.ssl.*;
 
+import org.json.JSONObject;
+
 public class JiraRESTService implements IJiraService {
     private final String jiraUrl;
     private final String certPath;
@@ -19,37 +21,73 @@ public class JiraRESTService implements IJiraService {
         this.serverStorePath = serverStorePath;
     }
 
-    public int transition(String key, String transitionId) throws Exception {
+    public String getCurrentStatus(String key) throws Exception {
+        String statusUrl = jiraUrl + "issue/" + key;
+        JSONObject result = performGet(statusUrl);
+        String name = result.getJSONObject("fields").getJSONObject("status").getString("name");
+
+        System.out.println("Current status name: " + name);
+
+        String status;
+        if (name.equalsIgnoreCase("Open")) {
+            status = "ToDo";
+        }
+        else if (name.equalsIgnoreCase("In Progress")) {
+            status  = "InProgress";
+        }
+        else {
+            status = "Done";
+        }
+        return status;
+    }
+
+    public void transition(String key, String transitionId) throws Exception {
+        String transitionUrl = jiraUrl + "issue/" + key + "/transitions";
+        String data = "{\"update\": {\"comment\": [{\"add\": {\"body\": \"Start progress\" }}]},\"transition\": {\"id\": \"" + transitionId + "\"}}";
+        performPost(transitionUrl, data);
+    }
+
+    private JSONObject performPost(String postUrl, String data) throws Exception {
+        return performHttpsRequest(postUrl, data, "POST");
+    }
+
+    private JSONObject performGet(String getUrl) throws Exception {
+        return performHttpsRequest(getUrl, "", "GET");
+    }
+
+    private JSONObject performHttpsRequest(String postUrl, String data, String method) throws Exception {
         configureSSLFactory();
 
-        URL url =  new URL(jiraUrl + "issue/" + key + "/transitions");
+        URL url = new URL(postUrl);
         HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
 
-        con.setRequestMethod("POST");
+        con.setRequestMethod(method);
         con.setRequestProperty("Content-Type", "application/json; charset=utf8");
 
-        String data = "{\"update\": {\"comment\": [{\"add\": {\"body\": \"Start progress\" }}]},\"transition\": {\"id\": \"" + transitionId + "\"}}";
+        if (data.length() > 0) {
+            con.setDoOutput(true);
+            DataOutputStream outputStream = new DataOutputStream(con.getOutputStream());
+            outputStream.writeBytes(data);
+            outputStream.flush();
+            outputStream.close();
+        }
 
-        con.setDoOutput(true);
-        DataOutputStream outputStream = new DataOutputStream(con.getOutputStream());
-        outputStream.writeBytes(data);
-        outputStream.flush();
-        outputStream.close();
-
-        int responseCode = con.getResponseCode();
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
 
         String inputLine;
-        StringBuffer response = new StringBuffer();
+        StringBuilder responseBuilder = new StringBuilder();
         while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+            responseBuilder.append(inputLine);
         }
         in.close();
 
-        System.out.println(response.toString());
-
-
-        return responseCode;
+        String response = responseBuilder.toString();
+        if (response.length() > 0) {
+            return new JSONObject(response);
+        }
+        else {
+            return new JSONObject();
+        }
     }
 
     private void configureSSLFactory() throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableKeyException, KeyManagementException {
