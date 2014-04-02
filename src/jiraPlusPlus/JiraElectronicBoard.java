@@ -50,7 +50,7 @@ public class JiraElectronicBoard implements IElectronicBoard {
                 }
             } else if (currentStatus == "Done") {
                 transitions.offer("3");
-                currentStatus = "InProgress";
+                currentStatus = "ToDo";
             }
         }
 
