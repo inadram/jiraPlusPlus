@@ -10,6 +10,8 @@ public class Application {
     public static void main(String[] args) {
         try {
             if (args[0].equalsIgnoreCase("physical")) {
+            	PhysicalBoard ph = new PhysicalBoard();
+            	ph.main();
 
             } else if (args[0].equalsIgnoreCase("electronic")) {
                 String ticketNumber = args[1];
