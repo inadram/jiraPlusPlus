@@ -20,9 +20,11 @@ public class JiraElectronicBoard implements IElectronicBoard {
         for (Ticket ticket : this.tickets) {
             String currentStatus = this.jiraService.getCurrentStatus(ticket.getId());
             Queue<String> transitions = this.getTransitions(currentStatus, ticket.getStatus());
-            String transition;
-            while ((transition = transitions.remove()) != null)
+
+            while (transitions.size() > 0) {
+                String transition = transitions.remove();
                 this.jiraService.transition(ticket.getId(), transition);
+            }
         }
     }
 
@@ -31,26 +33,26 @@ public class JiraElectronicBoard implements IElectronicBoard {
 
         String currentStatus = startStatus;
         int whileCounter = 0;
-        while (currentStatus != endStatus) {
+        while (!currentStatus.equalsIgnoreCase(endStatus)) {
             whileCounter++;
             if (whileCounter > 10) {
                 throw new Exception("Stuck in transitioning between " + startStatus + " and " + endStatus);
             }
 
-            if (currentStatus == "ToDo") {
+            if (currentStatus.equalsIgnoreCase("ToDo")) {
                 transitions.offer("4");
                 currentStatus = "InProgress";
-            } else if (currentStatus == "InProgress") {
-                if (endStatus == "ToDo") {
-                    transitions.offer("5");
+            } else if (currentStatus.equalsIgnoreCase("InProgress")) {
+                if (endStatus.equalsIgnoreCase("ToDo")) {
+                    transitions.offer("301");
                     currentStatus = "ToDo";
-                } else if (endStatus == "Done") {
-                    transitions.offer("7");
+                } else if (endStatus.equalsIgnoreCase("Done")) {
+                    transitions.offer("5");
                     currentStatus = "Done";
                 }
-            } else if (currentStatus == "Done") {
-                transitions.offer("9");
-                currentStatus = "InProgress";
+            } else if (currentStatus.equalsIgnoreCase("Done")) {
+                transitions.offer("3");
+                currentStatus = "ToDo";
             }
         }
 

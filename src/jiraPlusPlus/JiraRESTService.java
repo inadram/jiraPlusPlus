@@ -29,7 +29,7 @@ public class JiraRESTService implements IJiraService {
         System.out.println("Current status name: " + name);
 
         String status;
-        if (name.equalsIgnoreCase("Open")) {
+        if (name.equalsIgnoreCase("Open") || name.equalsIgnoreCase("Reopened")) {
             status = "ToDo";
         }
         else if (name.equalsIgnoreCase("In Progress")) {
