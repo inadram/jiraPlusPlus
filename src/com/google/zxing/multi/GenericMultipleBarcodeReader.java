@@ -29,12 +29,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p>Attempts to locate multiple barcodes in an image by repeatedly decoding portion of the image.
+ * <p>Attempts to locate multiple barcodes in an Imageutility by repeatedly decoding portion of the Imageutility.
  * After one barcode is found, the areas left, above, right and below the barcode's
  * {@link ResultPoint}s are scanned, recursively.</p>
  *
  * <p>A caller may want to also employ {@link ByQuadrantReader} when attempting to find multiple
- * 2D barcodes, like QR Codes, in an image, where the presence of multiple barcodes might prevent
+ * 2D barcodes, like QR Codes, in an Imageutility, where the presence of multiple barcodes might prevent
  * detecting any one of them.</p>
  *
  * <p>That is, instead of passing a {@link Reader} a caller might pass

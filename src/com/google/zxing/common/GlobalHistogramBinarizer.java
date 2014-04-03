@@ -90,7 +90,7 @@ public class GlobalHistogramBinarizer extends Binarizer {
     int height = source.getHeight();
     BitMatrix matrix = new BitMatrix(width, height);
 
-    // Quickly calculates the histogram by sampling four rows from the image. This proved to be
+    // Quickly calculates the histogram by sampling four rows from the Imageutility. This proved to be
     // more robust on the blackbox tests than sampling a diagonal as we used to do.
     initArrays(width);
     int[] localBuckets = buckets;
@@ -105,7 +105,7 @@ public class GlobalHistogramBinarizer extends Binarizer {
     }
     int blackPoint = estimateBlackPoint(localBuckets);
 
-    // We delay reading the entire image luminance until the black point estimation succeeds.
+    // We delay reading the entire Imageutility luminance until the black point estimation succeeds.
     // Although we end up reading four rows twice, it is consistent with our motto of
     // "fail quickly" which is necessary for continuous scanning.
     byte[] localLuminances = source.getMatrix();
@@ -172,8 +172,8 @@ public class GlobalHistogramBinarizer extends Binarizer {
       secondPeak = temp;
     }
 
-    // If there is too little contrast in the image to pick a meaningful black point, throw rather
-    // than waste time trying to decode the image, and risk false positives.
+    // If there is too little contrast in the Imageutility to pick a meaningful black point, throw rather
+    // than waste time trying to decode the Imageutility, and risk false positives.
     if (secondPeak - firstPeak <= numBuckets >> 4) {
       throw NotFoundException.getNotFoundInstance();
     }

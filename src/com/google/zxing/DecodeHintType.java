@@ -35,7 +35,7 @@ public enum DecodeHintType {
   OTHER(Object.class),
 
   /**
-   * Image is a pure monochrome image of a barcode. Doesn't matter what it maps to;
+   * Image is a pure monochrome Imageutility of a barcode. Doesn't matter what it maps to;
    * use {@link Boolean#TRUE}.
    */
   PURE_BARCODE(Void.class),

@@ -31,7 +31,7 @@ import com.google.zxing.qrcode.decoder.Version;
 import java.util.Map;
 
 /**
- * <p>Encapsulates logic that can detect a QR Code in an image, even if the QR Code
+ * <p>Encapsulates logic that can detect a QR Code in an Imageutility, even if the QR Code
  * is rotated or skewed, or partially obscured.</p>
  *
  * @author Sean Owen
@@ -54,7 +54,7 @@ public class Detector {
   }
 
   /**
-   * <p>Detects a QR Code in an image, simply.</p>
+   * <p>Detects a QR Code in an Imageutility, simply.</p>
    *
    * @return {@link DetectorResult} encapsulating results of detecting a QR Code
    * @throws NotFoundException if no QR Code can be found
@@ -64,7 +64,7 @@ public class Detector {
   }
 
   /**
-   * <p>Detects a QR Code in an image, simply.</p>
+   * <p>Detects a QR Code in an Imageutility, simply.</p>
    *
    * @param hints optional hints to detector
    * @return {@link NotFoundException} encapsulating results of detecting a QR Code
@@ -261,7 +261,7 @@ public class Detector {
 
     float result = sizeOfBlackWhiteBlackRun(fromX, fromY, toX, toY);
 
-    // Now count other way -- don't run off image though of course
+    // Now count other way -- don't run off Imageutility though of course
     float scale = 1.0f;
     int otherToX = fromX - (toX - fromX);
     if (otherToX < 0) {
@@ -290,7 +290,7 @@ public class Detector {
   }
 
   /**
-   * <p>This method traces a line from a point in the image, in the direction towards another point.
+   * <p>This method traces a line from a point in the Imageutility, in the direction towards another point.
    * It begins in a black region, and keeps going until it finds white, then black, then white again.
    * It reports the distance from the start to this point.</p>
    *
@@ -343,7 +343,7 @@ public class Detector {
         error -= dx;
       }
     }
-    // Found black-white-black; give the benefit of the doubt that the next pixel outside the image
+    // Found black-white-black; give the benefit of the doubt that the next pixel outside the Imageutility
     // is "white" so this last point at (toX+xStep,toY) is the right ending. This is really a
     // small approximation; (toX+xStep,toY+yStep) might be really correct. Ignore this.
     if (state == 2) {
@@ -354,7 +354,7 @@ public class Detector {
   }
 
   /**
-   * <p>Attempts to locate an alignment pattern in a limited region of the image, which is
+   * <p>Attempts to locate an alignment pattern in a limited region of the Imageutility, which is
    * guessed to contain it. This method uses {@link AlignmentPattern}.</p>
    *
    * @param overallEstModuleSize estimated module size so far

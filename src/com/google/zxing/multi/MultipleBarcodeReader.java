@@ -24,7 +24,7 @@ import com.google.zxing.Result;
 import java.util.Map;
 
 /**
- * Implementation of this interface attempt to read several barcodes from one image.
+ * Implementation of this interface attempt to read several barcodes from one Imageutility.
  *
  * @see com.google.zxing.Reader
  * @author Sean Owen

@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * <p>This class attempts to find alignment patterns in a QR Code. Alignment patterns look like finder
- * patterns but are smaller and appear at regular intervals throughout the image.</p>
+ * patterns but are smaller and appear at regular intervals throughout the Imageutility.</p>
  *
  * <p>At the moment this only looks for the bottom-right alignment pattern.</p>
  *
@@ -50,9 +50,9 @@ final class AlignmentPatternFinder {
   private final ResultPointCallback resultPointCallback;
 
   /**
-   * <p>Creates a finder that will look in a portion of the whole image.</p>
+   * <p>Creates a finder that will look in a portion of the whole Imageutility.</p>
    *
-   * @param image image to search
+   * @param image Imageutility to search
    * @param startX left column from which to start searching
    * @param startY top row from which to start searching
    * @param width width of region to search
@@ -78,7 +78,7 @@ final class AlignmentPatternFinder {
   }
 
   /**
-   * <p>This method attempts to find the bottom-right alignment pattern in the image. It is a bit messy since
+   * <p>This method attempts to find the bottom-right alignment pattern in the Imageutility. It is a bit messy since
    * it's pretty performance-critical and so is written to be fast foremost.</p>
    *
    * @return {@link AlignmentPattern} if found

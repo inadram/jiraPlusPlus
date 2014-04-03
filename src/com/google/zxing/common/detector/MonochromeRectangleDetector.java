@@ -21,8 +21,8 @@ import com.google.zxing.ResultPoint;
 import com.google.zxing.common.BitMatrix;
 
 /**
- * <p>A somewhat generic detector that looks for a barcode-like rectangular region within an image.
- * It looks within a mostly white region of an image for a region of black and white, but mostly
+ * <p>A somewhat generic detector that looks for a barcode-like rectangular region within an Imageutility.
+ * It looks within a mostly white region of an Imageutility for a region of black and white, but mostly
  * black. It returns the four corners of the region, as best it can determine.</p>
  *
  * @author Sean Owen
@@ -39,7 +39,7 @@ public final class MonochromeRectangleDetector {
 
   /**
    * <p>Detects a rectangular region of black and white -- mostly black -- with a region of mostly
-   * white, in an image.</p>
+   * white, in an Imageutility.</p>
    *
    * @return {@link ResultPoint}[] describing the corners of the rectangular region. The first and
    *  last points are opposed on the diagonal, as are the second and third. The first point will be

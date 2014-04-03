@@ -22,8 +22,8 @@ import com.google.zxing.common.BitMatrix;
 
 /**
  * <p>
- * Detects a candidate barcode-like rectangular region within an image. It
- * starts around the center of the image, increases the size of the candidate
+ * Detects a candidate barcode-like rectangular region within an Imageutility. It
+ * starts around the center of the Imageutility, increases the size of the candidate
  * region until it finds a white rectangular region. By keeping track of the
  * last black points it encountered, it determines the corners of the barcode.
  * </p>
@@ -48,7 +48,7 @@ public final class WhiteRectangleDetector {
   }
 
   /**
-   * @throws NotFoundException if image is too small to accommodate {@code initSize}
+   * @throws NotFoundException if Imageutility is too small to accommodate {@code initSize}
    */
   public WhiteRectangleDetector(BitMatrix image, int initSize, int x, int y) throws NotFoundException {
     this.image = image;
@@ -66,8 +66,8 @@ public final class WhiteRectangleDetector {
 
   /**
    * <p>
-   * Detects a candidate barcode-like rectangular region within an image. It
-   * starts around the center of the image, increases the size of the candidate
+   * Detects a candidate barcode-like rectangular region within an Imageutility. It
+   * starts around the center of the Imageutility, increases the size of the candidate
    * region until it finds a white rectangular region.
    * </p>
    *

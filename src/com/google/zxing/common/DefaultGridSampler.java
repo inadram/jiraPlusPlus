@@ -61,7 +61,7 @@ public final class DefaultGridSampler extends GridSampler {
         points[x + 1] = iValue;
       }
       transform.transformPoints(points);
-      // Quick check to see if points transformed to something inside the image;
+      // Quick check to see if points transformed to something inside the Imageutility;
       // sufficient to check the endpoints
       checkAndNudgePoints(image, points);
       try {

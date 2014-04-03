@@ -51,9 +51,9 @@ public class FinderPatternFinder {
   private final ResultPointCallback resultPointCallback;
 
   /**
-   * <p>Creates a finder that will search the image for three finder patterns.</p>
+   * <p>Creates a finder that will search the Imageutility for three finder patterns.</p>
    *
-   * @param image image to search
+   * @param image Imageutility to search
    */
   public FinderPatternFinder(BitMatrix image) {
     this(image, null);
@@ -83,7 +83,7 @@ public class FinderPatternFinder {
     // 1:1:3:1:1 ratio; this tracks the number of such modules seen so far
 
     // Let's assume that the maximum version QR Code we support takes up 1/4 the height of the
-    // image, and then account for the center being 3 modules in size. This gives the smallest
+    // Imageutility, and then account for the center being 3 modules in size. This gives the smallest
     // number of pixels the center could be, so skip this often. When trying harder, look for all
     // QR versions regardless of how dense they are.
     int iSkip = (3 * maxI) / (4 * MAX_MODULES);
@@ -516,7 +516,7 @@ public class FinderPatternFinder {
    * @return number of rows we could safely skip during scanning, based on the first
    *         two finder patterns that have been located. In some cases their position will
    *         allow us to infer that the third pattern must lie below a certain point farther
-   *         down in the image.
+   *         down in the Imageutility.
    */
   private int findRowSkip() {
     int max = possibleCenters.size();

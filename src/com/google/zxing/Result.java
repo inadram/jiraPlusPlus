@@ -20,7 +20,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /**
- * <p>Encapsulates the result of decoding a barcode within an image.</p>
+ * <p>Encapsulates the result of decoding a barcode within an Imageutility.</p>
  *
  * @author Sean Owen
  */
@@ -68,7 +68,7 @@ public final class Result {
   }
 
   /**
-   * @return points related to the barcode in the image. These are typically points
+   * @return points related to the barcode in the Imageutility. These are typically points
    *         identifying finder patterns or the corners of the barcode. The exact meaning is
    *         specific to the type of barcode that was decoded.
    */

@@ -39,7 +39,7 @@ import java.util.Map;
  * <p>This class is thread-safe but not reentrant. Each thread must allocate its own object.
  *
  * <p>In contrast to {@link FinderPatternFinder}, this class will return an array of all possible
- * QR code locations in the image.</p>
+ * QR code locations in the Imageutility.</p>
  *
  * <p>Use the TRY_HARDER hint to ask for a more thorough detection.</p>
  *
@@ -85,9 +85,9 @@ final class MultiFinderPatternFinder extends FinderPatternFinder {
   }
 
   /**
-   * <p>Creates a finder that will search the image for three finder patterns.</p>
+   * <p>Creates a finder that will search the Imageutility for three finder patterns.</p>
    *
-   * @param image image to search
+   * @param image Imageutility to search
    */
   MultiFinderPatternFinder(BitMatrix image) {
     super(image);
@@ -238,7 +238,7 @@ final class MultiFinderPatternFinder extends FinderPatternFinder {
     // 1:1:3:1:1 ratio; this tracks the number of such modules seen so far
 
     // Let's assume that the maximum version QR Code we support takes up 1/4 the height of the
-    // image, and then account for the center being 3 modules in size. This gives the smallest
+    // Imageutility, and then account for the center being 3 modules in size. This gives the smallest
     // number of pixels the center could be, so skip this often. When trying harder, look for all
     // QR versions regardless of how dense they are.
     int iSkip = (int) (maxI / (MAX_MODULES * 4.0f) * 3);

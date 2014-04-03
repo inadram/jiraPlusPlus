@@ -20,7 +20,7 @@ import com.google.zxing.NotFoundException;
 
 /**
  * Implementations of this class can, given locations of finder patterns for a QR code in an
- * image, sample the right points in the image to reconstruct the QR code, accounting for
+ * Imageutility, sample the right points in the Imageutility to reconstruct the QR code, accounting for
  * perspective distortion. It is abstracted since it is relatively expensive and should be allowed
  * to take advantage of platform-specific optimized implementations, like Sun's Java Advanced
  * Imaging library, but which may not be available in other environments such as J2ME, and vice
@@ -56,14 +56,14 @@ public abstract class GridSampler {
   }
 
   /**
-   * Samples an image for a rectangular matrix of bits of the given dimension.
-   * @param image image to sample
-   * @param dimensionX width of {@link BitMatrix} to sample from image
-   * @param dimensionY height of {@link BitMatrix} to sample from image
-   * @return {@link BitMatrix} representing a grid of points sampled from the image within a region
+   * Samples an Imageutility for a rectangular matrix of bits of the given dimension.
+   * @param image Imageutility to sample
+   * @param dimensionX width of {@link BitMatrix} to sample from Imageutility
+   * @param dimensionY height of {@link BitMatrix} to sample from Imageutility
+   * @return {@link BitMatrix} representing a grid of points sampled from the Imageutility within a region
    *   defined by the "from" parameters
-   * @throws NotFoundException if image can't be sampled, for example, if the transformation defined
-   *   by the given points is invalid or results in sampling outside the image boundaries
+   * @throws NotFoundException if Imageutility can't be sampled, for example, if the transformation defined
+   *   by the given points is invalid or results in sampling outside the Imageutility boundaries
    */
   public abstract BitMatrix sampleGrid(BitMatrix image,
                                        int dimensionX,
@@ -83,19 +83,19 @@ public abstract class GridSampler {
                                        PerspectiveTransform transform) throws NotFoundException;
 
   /**
-   * <p>Checks a set of points that have been transformed to sample points on an image against
-   * the image's dimensions to see if the point are even within the image.</p>
+   * <p>Checks a set of points that have been transformed to sample points on an Imageutility against
+   * the Imageutility's dimensions to see if the point are even within the Imageutility.</p>
    *
-   * <p>This method will actually "nudge" the endpoints back onto the image if they are found to be
-   * barely (less than 1 pixel) off the image. This accounts for imperfect detection of finder
-   * patterns in an image where the QR Code runs all the way to the image border.</p>
+   * <p>This method will actually "nudge" the endpoints back onto the Imageutility if they are found to be
+   * barely (less than 1 pixel) off the Imageutility. This accounts for imperfect detection of finder
+   * patterns in an Imageutility where the QR Code runs all the way to the Imageutility border.</p>
    *
    * <p>For efficiency, the method will check points from either end of the line until one is found
-   * to be within the image. Because the set of points are assumed to be linear, this is valid.</p>
+   * to be within the Imageutility. Because the set of points are assumed to be linear, this is valid.</p>
    *
-   * @param image image into which the points should map
+   * @param image Imageutility into which the points should map
    * @param points actual points in x1,y1,...,xn,yn form
-   * @throws NotFoundException if an endpoint is lies outside the image boundaries
+   * @throws NotFoundException if an endpoint is lies outside the Imageutility boundaries
    */
   protected static void checkAndNudgePoints(BitMatrix image,
                                             float[] points) throws NotFoundException {

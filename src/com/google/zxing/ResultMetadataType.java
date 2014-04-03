@@ -30,7 +30,7 @@ public enum ResultMetadataType {
   OTHER,
 
   /**
-   * Denotes the likely approximate orientation of the barcode in the image. This value
+   * Denotes the likely approximate orientation of the barcode in the Imageutility. This value
    * is given as degrees rotated clockwise from the normal, upright orientation.
    * For example a 1D barcode which was found by reading top-to-bottom would be
    * said to have orientation "90". This key maps to an {@link Integer} whose

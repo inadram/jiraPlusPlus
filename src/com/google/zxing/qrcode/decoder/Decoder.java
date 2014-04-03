@@ -21,25 +21,16 @@ import com.google.zxing.DecodeHintType;
 import com.google.zxing.FormatException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.DecoderResult;
-import com.google.zxing.common.reedsolomon.GenericGF;
-import com.google.zxing.common.reedsolomon.ReedSolomonDecoder;
-import com.google.zxing.common.reedsolomon.ReedSolomonException;
 
 import java.util.Map;
 
 /**
  * <p>The main class which implements QR Code decoding -- as opposed to locating and extracting
- * the QR Code from an image.</p>
+ * the QR Code from an Imageutility.</p>
  *
  * @author Sean Owen
  */
 public final class Decoder {
-
-  private final ReedSolomonDecoder rsDecoder;
-
-  public Decoder() {
-    rsDecoder = new ReedSolomonDecoder(GenericGF.QR_CODE_FIELD_256);
-  }
 
   public DecoderResult decode(boolean[][] image) throws ChecksumException, FormatException {
     return decode(image, null);
@@ -186,11 +177,6 @@ public final class Decoder {
       codewordsInts[i] = codewordBytes[i] & 0xFF;
     }
     int numECCodewords = codewordBytes.length - numDataCodewords;
-    try {
-      rsDecoder.decode(codewordsInts, numECCodewords);
-    } catch (ReedSolomonException ignored) {
-      throw ChecksumException.getChecksumInstance();
-    }
     // Copy back into array of bytes -- only need to worry about the bytes that were data
     // We don't care about errors in the error-correction codewords
     for (int i = 0; i < numDataCodewords; i++) {

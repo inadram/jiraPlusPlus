@@ -15,12 +15,6 @@
  */
 
 package com.google.zxing;
-
-import com.google.zxing.aztec.AztecReader;
-import com.google.zxing.datamatrix.DataMatrixReader;
-import com.google.zxing.maxicode.MaxiCodeReader;
-import com.google.zxing.oned.MultiFormatOneDReader;
-import com.google.zxing.pdf417.PDF417Reader;
 import com.google.zxing.qrcode.QRCodeReader;
 
 import java.util.ArrayList;
@@ -46,7 +40,7 @@ public final class MultiFormatReader implements Reader {
    * Use setHints() followed by decodeWithState() for continuous scan applications.
    *
    * @param image The pixel data to decode
-   * @return The contents of the image
+   * @return The contents of the Imageutility
    * @throws NotFoundException Any errors which occurred
    */
   @Override
@@ -56,11 +50,11 @@ public final class MultiFormatReader implements Reader {
   }
 
   /**
-   * Decode an image using the hints provided. Does not honor existing state.
+   * Decode an Imageutility using the hints provided. Does not honor existing state.
    *
    * @param image The pixel data to decode
    * @param hints The hints to use, clearing the previous state.
-   * @return The contents of the image
+   * @return The contents of the Imageutility
    * @throws NotFoundException Any errors which occurred
    */
   @Override
@@ -70,11 +64,11 @@ public final class MultiFormatReader implements Reader {
   }
 
   /**
-   * Decode an image using the state set up by calling setHints() previously. Continuous scan
+   * Decode an Imageutility using the state set up by calling setHints() previously. Continuous scan
    * clients will get a <b>large</b> speed increase by using this instead of decode().
    *
    * @param image The pixel data to decode
-   * @return The contents of the image
+   * @return The contents of the Imageutility
    * @throws NotFoundException Any errors which occurred
    */
   public Result decodeWithState(BinaryBitmap image) throws NotFoundException {
@@ -87,10 +81,10 @@ public final class MultiFormatReader implements Reader {
 
   /**
    * This method adds state to the MultiFormatReader. By setting the hints once, subsequent calls
-   * to decodeWithState(image) can reuse the same set of readers without reallocating memory. This
+   * to decodeWithState(Imageutility) can reuse the same set of readers without reallocating memory. This
    * is important for performance in continuous scan clients.
    *
-   * @param hints The set of hints to use for subsequent calls to decode(image)
+   * @param hints The set of hints to use for subsequent calls to decode(Imageutility)
    */
   public void setHints(Map<DecodeHintType,?> hints) {
     this.hints = hints;
@@ -114,43 +108,15 @@ public final class MultiFormatReader implements Reader {
           formats.contains(BarcodeFormat.RSS_14) ||
           formats.contains(BarcodeFormat.RSS_EXPANDED);
       // Put 1D readers upfront in "normal" mode
-      if (addOneDReader && !tryHarder) {
-        readers.add(new MultiFormatOneDReader(hints));
-      }
+
       if (formats.contains(BarcodeFormat.QR_CODE)) {
         readers.add(new QRCodeReader());
       }
-      if (formats.contains(BarcodeFormat.DATA_MATRIX)) {
-        readers.add(new DataMatrixReader());
-      }
-      if (formats.contains(BarcodeFormat.AZTEC)) {
-        readers.add(new AztecReader());
-      }
-      if (formats.contains(BarcodeFormat.PDF_417)) {
-         readers.add(new PDF417Reader());
-      }
-      if (formats.contains(BarcodeFormat.MAXICODE)) {
-         readers.add(new MaxiCodeReader());
-      }
-      // At end in "try harder" mode
-      if (addOneDReader && tryHarder) {
-        readers.add(new MultiFormatOneDReader(hints));
-      }
     }
     if (readers.isEmpty()) {
-      if (!tryHarder) {
-        readers.add(new MultiFormatOneDReader(hints));
-      }
 
       readers.add(new QRCodeReader());
-      readers.add(new DataMatrixReader());
-      readers.add(new AztecReader());
-      readers.add(new PDF417Reader());
-      readers.add(new MaxiCodeReader());
 
-      if (tryHarder) {
-        readers.add(new MultiFormatOneDReader(hints));
-      }
     }
     this.readers = readers.toArray(new Reader[readers.size()]);
   }

@@ -39,7 +39,7 @@ public abstract class LuminanceSource {
    * Fetches one row of luminance data from the underlying platform's bitmap. Values range from
    * 0 (black) to 255 (white). Because Java does not have an unsigned byte type, callers will have
    * to bitwise and with 0xff for each value. It is preferable for implementations of this method
-   * to only fetch this row rather than the whole image, since no 2D Readers may be installed and
+   * to only fetch this row rather than the whole Imageutility, since no 2D Readers may be installed and
    * getMatrix() may never be called.
    *
    * @param y The row to fetch, which must be in [0,getHeight())
@@ -81,7 +81,7 @@ public abstract class LuminanceSource {
   }
 
   /**
-   * Returns a new object with cropped image data. Implementations may keep a reference to the
+   * Returns a new object with cropped Imageutility data. Implementations may keep a reference to the
    * original data rather than a copy. Only callable if isCropSupported() is true.
    *
    * @param left The left coordinate, which must be in [0,getWidth())
@@ -110,7 +110,7 @@ public abstract class LuminanceSource {
   }
 
   /**
-   * Returns a new object with rotated image data by 90 degrees counterclockwise.
+   * Returns a new object with rotated Imageutility data by 90 degrees counterclockwise.
    * Only callable if {@link #isRotateSupported()} is true.
    *
    * @return A rotated version of this object.
@@ -120,7 +120,7 @@ public abstract class LuminanceSource {
   }
 
   /**
-   * Returns a new object with rotated image data by 45 degrees counterclockwise.
+   * Returns a new object with rotated Imageutility data by 45 degrees counterclockwise.
    * Only callable if {@link #isRotateSupported()} is true.
    *
    * @return A rotated version of this object.

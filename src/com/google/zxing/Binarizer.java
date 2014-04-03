@@ -60,7 +60,7 @@ public abstract class Binarizer {
    * may not apply sharpening. Therefore, a row from this matrix may not be identical to one
    * fetched using getBlackRow(), so don't mix and match between them.
    *
-   * @return The 2D array of bits for the image (true means black).
+   * @return The 2D array of bits for the Imageutility (true means black).
    */
   public abstract BitMatrix getBlackMatrix() throws NotFoundException;
 

@@ -47,7 +47,7 @@ public final class PlanarYUVLuminanceSource extends LuminanceSource {
     super(width, height);
 
     if (left + width > dataWidth || top + height > dataHeight) {
-      throw new IllegalArgumentException("Crop rectangle does not fit within image data.");
+      throw new IllegalArgumentException("Crop rectangle does not fit within Imageutility data.");
     }
 
     this.yuvData = yuvData;
@@ -63,7 +63,7 @@ public final class PlanarYUVLuminanceSource extends LuminanceSource {
   @Override
   public byte[] getRow(int y, byte[] row) {
     if (y < 0 || y >= getHeight()) {
-      throw new IllegalArgumentException("Requested row is outside the image: " + y);
+      throw new IllegalArgumentException("Requested row is outside the Imageutility: " + y);
     }
     int width = getWidth();
     if (row == null || row.length < width) {
@@ -79,7 +79,7 @@ public final class PlanarYUVLuminanceSource extends LuminanceSource {
     int width = getWidth();
     int height = getHeight();
 
-    // If the caller asks for the entire underlying image, save the copy and give them the
+    // If the caller asks for the entire underlying Imageutility, save the copy and give them the
     // original data. The docs specifically warn that result.length must be ignored.
     if (width == dataWidth && height == dataHeight) {
       return yuvData;
@@ -141,14 +141,14 @@ public final class PlanarYUVLuminanceSource extends LuminanceSource {
   }
   
   /**
-   * @return width of image from {@link #renderThumbnail()}
+   * @return width of Imageutility from {@link #renderThumbnail()}
    */
   public int getThumbnailWidth() {
     return getWidth() / THUMBNAIL_SCALE_FACTOR;
   }
   
   /**
-   * @return height of image from {@link #renderThumbnail()}
+   * @return height of Imageutility from {@link #renderThumbnail()}
    */  
   public int getThumbnailHeight() {
     return getHeight() / THUMBNAIL_SCALE_FACTOR;

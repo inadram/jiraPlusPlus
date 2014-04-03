@@ -40,7 +40,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * This implementation can detect and decode multiple QR Codes in an image.
+ * This implementation can detect and decode multiple QR Codes in an Imageutility.
  *
  * @author Sean Owen
  * @author Hannes Erven

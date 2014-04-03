@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This implementation can detect and decode QR Codes in an image.
+ * This implementation can detect and decode QR Codes in an Imageutility.
  *
  * @author Sean Owen
  */
@@ -52,7 +52,7 @@ public class QRCodeReader implements Reader {
   }
 
   /**
-   * Locates and decodes a QR code in an image.
+   * Locates and decodes a QR code in an Imageutility.
    *
    * @return a String representing the content encoded by the QR code
    * @throws NotFoundException if a QR code cannot be found
@@ -108,8 +108,8 @@ public class QRCodeReader implements Reader {
   }
 
   /**
-   * This method detects a code in a "pure" image -- that is, pure monochrome image
-   * which contains only an unrotated, unskewed, image of a code, with some white border
+   * This method detects a code in a "pure" Imageutility -- that is, pure monochrome Imageutility
+   * which contains only an unrotated, unskewed, Imageutility of a code, with some white border
    * around it. This is a specialized method that works exceptionally fast in this special
    * case.
    *
@@ -152,7 +152,7 @@ public class QRCodeReader implements Reader {
     }
 
     // Push in the "border" by half the module width so that we start
-    // sampling in the middle of the module. Just in case the image is a
+    // sampling in the middle of the module. Just in case the Imageutility is a
     // little off, this will help recover.
     int nudge = (int) (moduleSize / 2.0f);
     top += nudge;

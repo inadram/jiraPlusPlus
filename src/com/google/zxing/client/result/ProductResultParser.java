@@ -18,7 +18,6 @@ package com.google.zxing.client.result;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
-import com.google.zxing.oned.UPCEReader;
 
 /**
  * Parses strings of digits that represent a UPC code.
@@ -44,7 +43,7 @@ public final class ProductResultParser extends ResultParser {
     String normalizedProductID;
     // Expand UPC-E for purposes of searching
     if (format == BarcodeFormat.UPC_E && rawText.length() == 8) {
-      normalizedProductID = UPCEReader.convertUPCEtoUPCA(rawText);
+      normalizedProductID = "";
     } else {
       normalizedProductID = rawText;
     }

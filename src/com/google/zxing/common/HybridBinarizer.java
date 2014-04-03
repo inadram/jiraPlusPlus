@@ -82,7 +82,7 @@ public final class HybridBinarizer extends GlobalHistogramBinarizer {
       calculateThresholdForBlock(luminances, subWidth, subHeight, width, height, blackPoints, newMatrix);
       matrix = newMatrix;
     } else {
-      // If the image is too small, fall back to the global histogram approach.
+      // If the Imageutility is too small, fall back to the global histogram approach.
       matrix = super.getBlackMatrix();
     }
     return matrix;
@@ -94,7 +94,7 @@ public final class HybridBinarizer extends GlobalHistogramBinarizer {
   }
 
   /**
-   * For each block in the image, calculate the average black point using a 5x5 grid
+   * For each block in the Imageutility, calculate the average black point using a 5x5 grid
    * of the blocks around it. Also handles the corner cases (fractional blocks are computed based
    * on the last pixels in the row/column which are also used in the previous block).
    */

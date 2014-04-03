@@ -19,7 +19,7 @@ package com.google.zxing;
 import com.google.zxing.common.detector.MathUtils;
 
 /**
- * <p>Encapsulates a point of interest in an image containing a barcode. Typically, this
+ * <p>Encapsulates a point of interest in an Imageutility containing a barcode. Typically, this
  * would be the location of a finder pattern or the corner of the barcode, for example.</p>
  *
  * @author Sean Owen

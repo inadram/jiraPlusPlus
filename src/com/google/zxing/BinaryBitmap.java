@@ -71,7 +71,7 @@ public final class BinaryBitmap {
    * may not apply sharpening. Therefore, a row from this matrix may not be identical to one
    * fetched using getBlackRow(), so don't mix and match between them.
    *
-   * @return The 2D array of bits for the image (true means black).
+   * @return The 2D array of bits for the Imageutility (true means black).
    */
   public BitMatrix getBlackMatrix() throws NotFoundException {
     // The matrix is created on demand the first time it is requested, then cached. There are two
@@ -93,7 +93,7 @@ public final class BinaryBitmap {
   }
 
   /**
-   * Returns a new object with cropped image data. Implementations may keep a reference to the
+   * Returns a new object with cropped Imageutility data. Implementations may keep a reference to the
    * original data rather than a copy. Only callable if isCropSupported() is true.
    *
    * @param left The left coordinate, which must be in [0,getWidth())
@@ -115,7 +115,7 @@ public final class BinaryBitmap {
   }
 
   /**
-   * Returns a new object with rotated image data by 90 degrees counterclockwise.
+   * Returns a new object with rotated Imageutility data by 90 degrees counterclockwise.
    * Only callable if {@link #isRotateSupported()} is true.
    *
    * @return A rotated version of this object.
@@ -126,7 +126,7 @@ public final class BinaryBitmap {
   }
 
   /**
-   * Returns a new object with rotated image data by 45 degrees counterclockwise.
+   * Returns a new object with rotated Imageutility data by 45 degrees counterclockwise.
    * Only callable if {@link #isRotateSupported()} is true.
    *
    * @return A rotated version of this object.
