@@ -36,11 +36,11 @@ public class Application {
                 eBoard.populate(tickets);
                 eBoard.sync();
             } else if (args[0].equalsIgnoreCase("email")) {
-                EmailReader emailReader = new EmailReader("jiraplusplus@gmail.com", "JiraPlus", "imap.gmail.com", "/home/pi/images");
+                EmailReader emailReader = new EmailReader("jiraplusplus@gmail.com", "password", "imap.gmail.com", "/home/pi/images");
                 emailReader.getOldestUnprocessedImage();
             } else if (args[0].equalsIgnoreCase("normal")) {
                 while (true) {
-                    EmailReader emailReader = new EmailReader("jiraplusplus@gmail.com", "JiraPlus", "imap.gmail.com", "/home/pi/images");
+                    EmailReader emailReader = new EmailReader("jiraplusplus@gmail.com", "password", "imap.gmail.com", "/home/pi/images");
                     File imageForProcessing = emailReader.getOldestUnprocessedImage();
                     if (imageForProcessing != null) {
                         // physical board
