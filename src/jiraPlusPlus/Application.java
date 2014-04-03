@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Application {
     public static void main(String[] args) {
         try {
+            long startTime = System.currentTimeMillis();
             if (args[0].equalsIgnoreCase("physical")) {
 
             } else if (args[0].equalsIgnoreCase("electronic")) {
@@ -27,6 +28,8 @@ public class Application {
             else  {
                 throw new Exception("Input expected to be electronic or physical");
             }
+            long endTime = System.currentTimeMillis();
+            System.out.println("App total time: " + (endTime - startTime) + "ms");
         } catch (Exception e) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
