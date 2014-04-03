@@ -1,7 +1,14 @@
 package jiraPlusPlus;
 
+import jiraPlusPlus.physicalBoard.Imageutility.ImageUtility;
+import jiraPlusPlus.physicalBoard.PhysicalBoard;
+import jiraPlusPlus.physicalBoard.QrCode.QrCode;
+import jiraPlusPlus.physicalBoard.iPhysicalBoard;
+import org.json.JSONArray;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -11,8 +18,10 @@ public class Application {
         try {
             long startTime = System.currentTimeMillis();
             if (args[0].equalsIgnoreCase("physical")) {
-            	PhysicalBoard ph = new PhysicalBoard();
-            	ph.main();
+            	iPhysicalBoard ph = new PhysicalBoard(new ImageUtility(),new QrCode());
+            	List<Ticket> tickets= ph.getTicketsOfImage("1.jpg");
+				JSONArray jsonArray =new JSONArray(Arrays.asList(tickets));
+				System.out.println(jsonArray.toString());
 
             } else if (args[0].equalsIgnoreCase("electronic")) {
                 String ticketNumber = args[1];
