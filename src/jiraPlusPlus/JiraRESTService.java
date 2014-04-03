@@ -19,6 +19,8 @@ public class JiraRESTService implements IJiraService {
         this.certPath = certPath;
         this.password = password;
         this.serverStorePath = serverStorePath;
+
+        configureSSLFactory();
     }
 
     public String getCurrentStatus(String key) throws Exception {
@@ -56,15 +58,14 @@ public class JiraRESTService implements IJiraService {
     }
 
     private JSONObject performHttpsRequest(String postUrl, String data, String method) throws Exception {
-        configureSSLFactory();
-
+        long startTime = System.currentTimeMillis();
         URL url = new URL(postUrl);
         HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
 
         con.setRequestMethod(method);
-        con.setRequestProperty("Content-Type", "application/json; charset=utf8");
 
         if (data.length() > 0) {
+            con.setRequestProperty("Content-Type", "application/json; charset=utf8");
             con.setDoOutput(true);
             DataOutputStream outputStream = new DataOutputStream(con.getOutputStream());
             outputStream.writeBytes(data);
@@ -82,12 +83,18 @@ public class JiraRESTService implements IJiraService {
         in.close();
 
         String response = responseBuilder.toString();
+        JSONObject resultObject;
         if (response.length() > 0) {
-            return new JSONObject(response);
+            resultObject = new JSONObject(response);
         }
         else {
-            return new JSONObject();
+            resultObject = new JSONObject();
         }
+
+        long endTime = System.currentTimeMillis();
+        System.out.println("HTTPS " + method + " request time to " + postUrl + ": " + (endTime - startTime) + "ms");
+
+        return resultObject;
     }
 
     private void configureSSLFactory() throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, UnrecoverableKeyException, KeyManagementException {
