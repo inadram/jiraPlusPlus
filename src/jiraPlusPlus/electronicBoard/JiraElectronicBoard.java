@@ -1,4 +1,7 @@
-package jiraPlusPlus;
+package jiraPlusPlus.electronicBoard;
+
+import jiraPlusPlus.Ticket;
+import jiraPlusPlus.electronicBoard.jiraService.IJiraService;
 
 import java.util.LinkedList;
 import java.util.List;

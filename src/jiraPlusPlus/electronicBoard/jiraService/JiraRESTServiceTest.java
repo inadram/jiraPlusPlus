@@ -1,4 +1,4 @@
-package jiraPlusPlus;
+package jiraPlusPlus.electronicBoard.jiraService;
 
 import org.junit.Test;
 import org.junit.Assert;

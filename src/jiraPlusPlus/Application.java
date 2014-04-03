@@ -1,5 +1,9 @@
 package jiraPlusPlus;
 
+import jiraPlusPlus.electronicBoard.IElectronicBoard;
+import jiraPlusPlus.electronicBoard.jiraService.IJiraService;
+import jiraPlusPlus.electronicBoard.JiraElectronicBoard;
+import jiraPlusPlus.electronicBoard.jiraService.JiraRESTService;
 import jiraPlusPlus.physicalBoard.Imageutility.ImageUtility;
 import jiraPlusPlus.physicalBoard.PhysicalBoard;
 import jiraPlusPlus.physicalBoard.QrCode.QrCode;

@@ -1,4 +1,4 @@
-package jiraPlusPlus;
+package jiraPlusPlus.electronicBoard.jiraService;
 
 import java.io.*;
 import java.net.URL;

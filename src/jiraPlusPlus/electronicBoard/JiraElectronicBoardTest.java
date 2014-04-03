@@ -1,5 +1,7 @@
-package jiraPlusPlus;
+package jiraPlusPlus.electronicBoard;
 
+import jiraPlusPlus.Ticket;
+import jiraPlusPlus.electronicBoard.jiraService.IJiraService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
