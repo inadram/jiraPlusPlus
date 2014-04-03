@@ -6,6 +6,7 @@ import jiraPlusPlus.physicalBoard.QrCode.QrCode;
 import jiraPlusPlus.physicalBoard.iPhysicalBoard;
 import org.json.JSONArray;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
@@ -18,11 +19,10 @@ public class Application {
         try {
             long startTime = System.currentTimeMillis();
             if (args[0].equalsIgnoreCase("physical")) {
-            	iPhysicalBoard ph = new PhysicalBoard(new ImageUtility(),new QrCode());
-            	List<Ticket> tickets= ph.getTicketsOfImage("1.jpg");
-				JSONArray jsonArray =new JSONArray(Arrays.asList(tickets));
-				System.out.println(jsonArray.toString());
-
+                iPhysicalBoard ph = new PhysicalBoard(new ImageUtility(), new QrCode());
+                List<Ticket> tickets = ph.getTicketsOfImage("1.jpg");
+                JSONArray jsonArray = new JSONArray(Arrays.asList(tickets));
+                System.out.println(jsonArray.toString());
             } else if (args[0].equalsIgnoreCase("electronic")) {
                 String ticketNumber = args[1];
                 String status = args[2];
@@ -35,8 +35,22 @@ public class Application {
                 IElectronicBoard eBoard = new JiraElectronicBoard(jiraService);
                 eBoard.populate(tickets);
                 eBoard.sync();
-            }
-            else  {
+            } else if (args[0].equalsIgnoreCase("email")) {
+                EmailReader emailReader = new EmailReader("jiraplusplus@gmail.com", "JiraPlus", "imap.gmail.com", "/home/pi/images");
+                emailReader.getOldestUnprocessedImage();
+            } else if (args[0].equalsIgnoreCase("normal")) {
+                while (true) {
+                    EmailReader emailReader = new EmailReader("jiraplusplus@gmail.com", "JiraPlus", "imap.gmail.com", "/home/pi/images");
+                    File imageForProcessing = emailReader.getOldestUnprocessedImage();
+                    if (imageForProcessing != null) {
+                        // physical board
+                        // sync to eboar
+                    }
+                    else {
+                        // sleep 30
+                    }
+                }
+            } else {
                 throw new Exception("Input expected to be electronic or physical");
             }
             long endTime = System.currentTimeMillis();
