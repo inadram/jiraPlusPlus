@@ -26,20 +26,27 @@ public class JiraRESTService implements IJiraService {
     public String getCurrentStatus(String key) throws Exception {
         String statusUrl = jiraUrl + "issue/" + key;
         JSONObject result = performGet(statusUrl);
-        String name = result.getJSONObject("fields").getJSONObject("status").getString("name");
+        String statusName = "Unknown";
+        if (result.has("fields")) {
+            statusName = result.getJSONObject("fields").getJSONObject("status").getString("name");
+        }
 
-        System.out.println("Current status name: " + name);
+        System.out.println("Current status name: " + statusName);
 
         String status;
-        if (name.equalsIgnoreCase("Open") || name.equalsIgnoreCase("Reopened")) {
+        if (statusName.equalsIgnoreCase("Open") || statusName.equalsIgnoreCase("Reopened")) {
             status = "ToDo";
         }
-        else if (name.equalsIgnoreCase("In Progress")) {
+        else if (statusName.equalsIgnoreCase("In Progress")) {
             status  = "InProgress";
         }
-        else {
+        else if (statusName.equalsIgnoreCase("Resolved") || statusName.equalsIgnoreCase("Closed")) {
             status = "Done";
         }
+        else {
+            status = "Unknown";
+        }
+
         return status;
     }
 
@@ -73,23 +80,29 @@ public class JiraRESTService implements IJiraService {
             outputStream.close();
         }
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+        JSONObject resultObject = new JSONObject();
 
-        String inputLine;
-        StringBuilder responseBuilder = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            responseBuilder.append(inputLine);
-        }
-        in.close();
+        try {
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+            String inputLine;
+            StringBuilder responseBuilder = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                responseBuilder.append(inputLine);
+            }
+            in.close();
 
-        String response = responseBuilder.toString();
-        JSONObject resultObject;
-        if (response.length() > 0) {
-            resultObject = new JSONObject(response);
+            String response = responseBuilder.toString();
+            if (response.length() > 0) {
+                resultObject = new JSONObject(response);
+            }
         }
-        else {
-            resultObject = new JSONObject();
+        catch (Exception e) {
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            System.err.println(sw.toString());
         }
+
 
         long endTime = System.currentTimeMillis();
         System.out.println("HTTPS " + method + " request time to " + postUrl + ": " + (endTime - startTime) + "ms");

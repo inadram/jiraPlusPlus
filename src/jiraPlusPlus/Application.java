@@ -81,7 +81,7 @@ public class Application {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
-            System.out.println(sw.toString());
+            System.err.println(sw.toString());
         }
     }
 }
