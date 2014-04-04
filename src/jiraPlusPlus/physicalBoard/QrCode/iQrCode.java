@@ -7,5 +7,5 @@ import jiraPlusPlus.Ticket;
 import java.util.List;
 
 public interface iQrCode {
-	List<Ticket> getTickets(BinaryBitmap binaryBitmap) throws NotFoundException;
+	List<Ticket> getTickets(BinaryBitmap binaryBitmap) throws Exception;
 }

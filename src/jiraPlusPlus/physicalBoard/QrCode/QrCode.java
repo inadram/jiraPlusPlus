@@ -10,7 +10,7 @@ import java.util.List;
 
 public class QrCode implements iQrCode {
 
-	public List<Ticket> getTickets(BinaryBitmap binaryBitmap) throws NotFoundException {
+	public List<Ticket> getTickets(BinaryBitmap binaryBitmap) throws Exception {
 		return mapQrCodeToTicket(getQRCodeList(binaryBitmap));
 	}
 
@@ -23,11 +23,14 @@ public class QrCode implements iQrCode {
 		return multiReader.decodeMultiple(binaryBitmap, hints);
 	}
 
-	private List<Ticket> mapQrCodeToTicket(Result[] results) {
+	private List<Ticket> mapQrCodeToTicket(Result[] results) throws Exception {
 		List<Ticket> tickets = new ArrayList<>();
 		for (Result result : results) {
-			Ticket ticket = new Ticket(result.getText(), "ToDo");
-			tickets.add(ticket);
+            String ticketId = result.getText();
+            if (ticketId.trim().length() > 0) {
+                Ticket ticket = new Ticket(ticketId, "ToDo");
+                tickets.add(ticket);
+            }
 		}
 		return tickets;
 	}
