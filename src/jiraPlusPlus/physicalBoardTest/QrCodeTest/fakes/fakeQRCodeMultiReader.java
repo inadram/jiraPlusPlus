@@ -9,13 +9,13 @@ import com.google.zxing.multi.MultipleBarcodeReader;
 import java.util.Map;
 
 public class FakeQRCodeMultiReader implements MultipleBarcodeReader {
-	@Override
-	public Result[] decodeMultiple(BinaryBitmap image) throws NotFoundException {
-		return new Result[0];  //To change body of implemented methods use File | Settings | File Templates.
-	}
+    @Override
+    public Result[] decodeMultiple(BinaryBitmap image) throws NotFoundException {
+        return new Result[0];  //To change body of implemented methods use File | Settings | File Templates.
+    }
 
-	@Override
-	public Result[] decodeMultiple(BinaryBitmap image, Map<DecodeHintType, ?> hints) throws NotFoundException {
-		return new Result[0];  //To change body of implemented methods use File | Settings | File Templates.
-	}
+    @Override
+    public Result[] decodeMultiple(BinaryBitmap image, Map<DecodeHintType, ?> hints) throws NotFoundException {
+        return new Result[0];  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

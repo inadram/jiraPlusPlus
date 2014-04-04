@@ -28,8 +28,7 @@ public class JiraElectronicBoard implements IElectronicBoard {
             String transition = transitions.remove();
             try {
                 this.jiraService.transition(ticket.getId(), transition);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw);
                 e.printStackTrace(pw);
@@ -43,6 +42,7 @@ public class JiraElectronicBoard implements IElectronicBoard {
         String currentStatus = this.jiraService.getCurrentStatus(ticket.getId());
         Queue<String> transitions = new LinkedList<>();
         if (currentStatus != "Unknown") {
+            System.out.println("Getting transitions for ticket:  " + ticket.getId() + " transitioning from: " + currentStatus + " to: " + ticket.getStatus());
             transitions = this.getTransitions(currentStatus, ticket.getStatus());
         }
         return transitions;
