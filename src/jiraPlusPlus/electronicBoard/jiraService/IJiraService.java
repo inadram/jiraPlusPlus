@@ -1,4 +1,4 @@
-package jiraPlusPlus;
+package jiraPlusPlus.electronicBoard.jiraService;
 
 public interface IJiraService {
     public String getCurrentStatus(String key) throws Exception;

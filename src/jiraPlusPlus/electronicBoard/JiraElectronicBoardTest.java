@@ -1,5 +1,7 @@
-package jiraPlusPlus;
+package jiraPlusPlus.electronicBoard;
 
+import jiraPlusPlus.Ticket;
+import jiraPlusPlus.electronicBoard.jiraService.IJiraService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -20,8 +22,7 @@ public class JiraElectronicBoardTest {
 
         List<Ticket> tickets = this.createListOfTickets(1);
 
-        jeb.populate(tickets);
-        jeb.sync();
+        jeb.sync(tickets);
 
         Mockito.verify(mockJiraService, Mockito.times(1)).transition("Key0", "Status0");
     }
@@ -32,8 +33,7 @@ public class JiraElectronicBoardTest {
 
         List<Ticket> tickets = this.createListOfTickets(20);
 
-        jeb.populate(tickets);
-        jeb.sync();
+        jeb.sync(tickets);
 
         Mockito.verify(mockJiraService, Mockito.times(20)).transition(Mockito.anyString(), Mockito.anyString());
     }

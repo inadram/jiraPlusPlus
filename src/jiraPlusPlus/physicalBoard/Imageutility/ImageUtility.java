@@ -5,6 +5,7 @@ import com.google.zxing.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -12,15 +13,14 @@ import javax.imageio.ImageIO;
 public class ImageUtility implements iImageUtility {
 
 	@Override
-	public BinaryBitmap convertToBinaryBitmap(String imageName) throws IOException {
-		BufferedImage bufferedImage= getBufferedImage(imageName);
-		return convertBufferedImageToBinaryBitMap(bufferedImage);
-//		binaryBitmap = RotateImage90DegreeCounterClockwise(binaryBitmap);
-//		return  binaryBitmap;
+	public BinaryBitmap convertToBinaryBitmap(File image) throws IOException {
+		BufferedImage bufferedImage= getBufferedImage(image);
+		BinaryBitmap binaryBitmap = convertBufferedImageToBinaryBitMap(bufferedImage);
+        return RotateImage90DegreeCounterClockwise(binaryBitmap);
 	}
 
-	private BufferedImage getBufferedImage(String imageName) throws IOException {
-		FileInputStream fileInputStream = new FileInputStream(imageName);
+	private BufferedImage getBufferedImage(File image) throws IOException {
+		FileInputStream fileInputStream = new FileInputStream(image);
 		return ImageIO.read(fileInputStream);
 	}
 
