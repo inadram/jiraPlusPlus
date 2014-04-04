@@ -16,35 +16,54 @@ public class EmailReader implements IImageLocation {
     private final String serverUrl;
     private final String tmpFileLocation;
     private final Properties props;
+    private final Store store;
+    private Folder inbox;
 
-    public EmailReader(String emailAddress, String emailPassword, String serverUrl, String tmpFileLocation) {
+    public EmailReader(String emailAddress, String emailPassword, String serverUrl, String tmpFileLocation) throws Exception {
         this.emailAddress = emailAddress;
         this.emailPassword = emailPassword;
         this.serverUrl = serverUrl;
         this.tmpFileLocation = tmpFileLocation;
         this.props = new Properties();
         this.props.setProperty("mail.store.protocol", "imaps");
+        Session session = Session.getInstance(this.props, null);
+        this.store = session.getStore();
+        this.connectToStore();
+        this.connectToInbox();
+    }
+
+    private void connectToStore() throws MessagingException {
+        this.store.connect(this.serverUrl, this.emailAddress, this.emailPassword);
+        System.out.println("Connection to store established");
+    }
+
+    private void connectToInbox() throws MessagingException {
+        this.inbox = store.getFolder("INBOX");
+        this.inbox.open(Folder.READ_WRITE);
+        System.out.println("Connecting to inbox");
     }
 
     @Override
     public File getOldestUnprocessedImage() throws Exception {
-        Session session = Session.getInstance(this.props, null);
-        Store store = session.getStore();
-        store.connect(this.serverUrl, this.emailAddress, this.emailPassword);
-
-        Folder inbox = store.getFolder("INBOX");
-        inbox.open(Folder.READ_WRITE);
+        if (!inbox.isOpen()) {
+            System.out.println("Inbox is not open");
+            this.connectToInbox();
+        }
 
         Message[] messageList = inbox.getMessages(1, inbox.getMessageCount());
         File file = null;
         for (int i = 1; i <= messageList.length; ++i) {
             Message message = inbox.getMessage(i);
+            if (message.isExpunged()) {
+                continue;
+            }
             InputStream is = getAttachmentForMessage(message);
             message.setFlag(Flags.Flag.DELETED, true);
             if (is != null) {
-               file = writeStreamToFile(is);
-               return file;
+                file = writeStreamToFile(is);
+                return file;
             }
+            this.inbox.expunge();
         }
 
         return file;
