@@ -38,7 +38,7 @@ public class JiraElectronicBoardTest {
         Mockito.verify(mockJiraService, Mockito.times(20)).transition(Mockito.anyString(), Mockito.anyString());
     }
 
-    private List<Ticket> createListOfTickets(int count) {
+    private List<Ticket> createListOfTickets(int count) throws Exception {
         List<Ticket> tickets = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
