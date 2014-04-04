@@ -4,6 +4,7 @@ import com.google.zxing.BinaryBitmap;
 import jiraPlusPlus.Ticket;
 import jiraPlusPlus.physicalBoard.Imageutility.iImageUtility;
 import jiraPlusPlus.physicalBoard.QrCode.iQrCode;
+import jiraPlusPlus.physicalBoard.mapping.QrCodeToTicket;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class PhysicalBoard implements iPhysicalBoard {
 
     public List<Ticket> getTicketsOfImage(File image) throws Exception {
         BinaryBitmap binaryBitmap = imageUtility.convertToBinaryBitmap(image);
-        List<Ticket> tickets = qrCode.getTickets(binaryBitmap);
+        List<Ticket> tickets = qrCode.getTickets(binaryBitmap,new QrCodeToTicket());
         return tickets;
     }
 }

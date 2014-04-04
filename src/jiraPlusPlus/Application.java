@@ -1,5 +1,6 @@
 package jiraPlusPlus;
 
+import com.google.zxing.multi.qrcode.QRCodeMultiReader;
 import jiraPlusPlus.electronicBoard.IElectronicBoard;
 import jiraPlusPlus.electronicBoard.jiraService.IJiraService;
 import jiraPlusPlus.electronicBoard.JiraElectronicBoard;
@@ -23,7 +24,7 @@ public class Application {
         try {
             long startTime = System.currentTimeMillis();
             if (args[0].equalsIgnoreCase("physical")) {
-                iPhysicalBoard ph = new PhysicalBoard(new ImageUtility(), new QrCode());
+                iPhysicalBoard ph = new PhysicalBoard(new ImageUtility(), new QrCode(new QRCodeMultiReader()));
                 List<Ticket> tickets = ph.getTicketsOfImage(new File("1.jpg"));
                 JSONArray jsonArray = new JSONArray(Arrays.asList(tickets));
                 System.out.println(jsonArray.toString());
@@ -47,7 +48,7 @@ public class Application {
                 IJiraService jiraService = new JiraRESTService("https://jira.dev.bbc.co.uk/rest/api/2/", "/home/pi/personal.p12", "/home/pi/jssecacerts", "password");
                 IElectronicBoard eBoard = new JiraElectronicBoard(jiraService);
                 EmailReader emailReader = new EmailReader("jiraplusplus@gmail.com", "JiraPlus", "imap.gmail.com", "/run/shm/images");
-                iPhysicalBoard physicalBoard = new PhysicalBoard(new ImageUtility(), new QrCode());
+                iPhysicalBoard physicalBoard = new PhysicalBoard(new ImageUtility(), new QrCode(new QRCodeMultiReader()));
                 long setupEndTime = System.currentTimeMillis();
                 System.out.println("Setup time: " + (setupEndTime - setupStartTime) + "ms");
 
