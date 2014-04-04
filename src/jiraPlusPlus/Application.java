@@ -73,7 +73,7 @@ public class Application {
                     }
                 }
             } else {
-                throw new Exception("Input expected to be electronic or physical");
+                System.out.println("Input expected to be electronic, physical, email or normal");
             }
             long endTime = System.currentTimeMillis();
             System.out.println("App total time: " + (endTime - startTime) + "ms");
@@ -81,7 +81,7 @@ public class Application {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
-            System.out.println(sw.toString());
+            System.err.println(sw.toString());
         }
     }
 }

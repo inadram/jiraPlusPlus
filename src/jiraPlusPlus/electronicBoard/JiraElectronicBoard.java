@@ -3,6 +3,8 @@ package jiraPlusPlus.electronicBoard;
 import jiraPlusPlus.Ticket;
 import jiraPlusPlus.electronicBoard.jiraService.IJiraService;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -16,14 +18,34 @@ public class JiraElectronicBoard implements IElectronicBoard {
 
     public void sync(List<Ticket> tickets) throws Exception {
         for (Ticket ticket : tickets) {
-            String currentStatus = this.jiraService.getCurrentStatus(ticket.getId());
-            Queue<String> transitions = this.getTransitions(currentStatus, ticket.getStatus());
+            Queue<String> transitions = getTransitions(ticket);
+            performTransitions(ticket, transitions);
+        }
+    }
 
-            while (transitions.size() > 0) {
-                String transition = transitions.remove();
+    private void performTransitions(Ticket ticket, Queue<String> transitions) {
+        while (transitions.size() > 0) {
+            String transition = transitions.remove();
+            try {
                 this.jiraService.transition(ticket.getId(), transition);
             }
+            catch (Exception e) {
+                StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw);
+                e.printStackTrace(pw);
+                System.err.println(sw.toString());
+                break;
+            }
         }
+    }
+
+    private Queue<String> getTransitions(Ticket ticket) throws Exception {
+        String currentStatus = this.jiraService.getCurrentStatus(ticket.getId());
+        Queue<String> transitions = new LinkedList<>();
+        if (currentStatus != "Unknown") {
+            transitions = this.getTransitions(currentStatus, ticket.getStatus());
+        }
+        return transitions;
     }
 
     public Queue<String> getTransitions(String startStatus, String endStatus) throws Exception {
