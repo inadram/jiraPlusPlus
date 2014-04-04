@@ -24,7 +24,7 @@ public class Application {
             long startTime = System.currentTimeMillis();
             if (args[0].equalsIgnoreCase("physical")) {
                 iPhysicalBoard ph = new PhysicalBoard(new ImageUtility(), new QrCode());
-                List<Ticket> tickets = ph.getTicketsOfImage("1.jpg");
+                List<Ticket> tickets = ph.getTicketsOfImage(new File("1.jpg"));
                 JSONArray jsonArray = new JSONArray(Arrays.asList(tickets));
                 System.out.println(jsonArray.toString());
             } else if (args[0].equalsIgnoreCase("electronic")) {
@@ -37,21 +37,39 @@ public class Application {
 
                 IJiraService jiraService = new JiraRESTService("https://jira.dev.bbc.co.uk/rest/api/2/", "/home/pi/personal.p12", "/home/pi/jssecacerts", "password");
                 IElectronicBoard eBoard = new JiraElectronicBoard(jiraService);
-                eBoard.populate(tickets);
-                eBoard.sync();
+                eBoard.sync(tickets);
             } else if (args[0].equalsIgnoreCase("email")) {
-                EmailReader emailReader = new EmailReader("jiraplusplus@gmail.com", "password", "imap.gmail.com", "/home/pi/images");
+                EmailReader emailReader = new EmailReader("jiraplusplus@gmail.com", "JiraPlus", "imap.gmail.com", "/run/shm/images");
                 emailReader.getOldestUnprocessedImage();
             } else if (args[0].equalsIgnoreCase("normal")) {
+                System.out.println("Starting JiraPlusPlus...");
+                long setupStartTime = System.currentTimeMillis();
+                IJiraService jiraService = new JiraRESTService("https://jira.dev.bbc.co.uk/rest/api/2/", "/home/pi/personal.p12", "/home/pi/jssecacerts", "password");
+                IElectronicBoard eBoard = new JiraElectronicBoard(jiraService);
+                EmailReader emailReader = new EmailReader("jiraplusplus@gmail.com", "JiraPlus", "imap.gmail.com", "/run/shm/images");
+                iPhysicalBoard physicalBoard = new PhysicalBoard(new ImageUtility(), new QrCode());
+                long setupEndTime = System.currentTimeMillis();
+                System.out.println("Setup time: " + (setupEndTime - setupStartTime) + "ms");
+
                 while (true) {
-                    EmailReader emailReader = new EmailReader("jiraplusplus@gmail.com", "password", "imap.gmail.com", "/home/pi/images");
+                    long emailStartTime = System.currentTimeMillis();
                     File imageForProcessing = emailReader.getOldestUnprocessedImage();
+                    long emailEndTime = System.currentTimeMillis();
+                    System.out.println("Email retrieval: " + (emailEndTime - emailStartTime) + "ms");
                     if (imageForProcessing != null) {
-                        // physical board
-                        // sync to eboar
-                    }
-                    else {
-                        // sleep 30
+                        List<Ticket> tickets = physicalBoard.getTicketsOfImage(imageForProcessing);
+                        long physicalEndTime = System.currentTimeMillis();
+                        System.out.println("Physical processing: " + (physicalEndTime - emailEndTime) + "ms");
+
+                        eBoard.sync(tickets);
+                        long electronicEndTime = System.currentTimeMillis();
+                        System.out.println("Electronic syncing: " + (electronicEndTime - physicalEndTime) + "ms");
+
+                        imageForProcessing.delete();
+                        long deletingEndTime = System.currentTimeMillis();
+                        System.out.println("Image deleting: " + (deletingEndTime - electronicEndTime) + "ms");
+                    } else {
+                        Thread.sleep(30000);
                     }
                 }
             } else {

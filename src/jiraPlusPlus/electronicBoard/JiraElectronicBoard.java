@@ -8,19 +8,14 @@ import java.util.List;
 import java.util.Queue;
 
 public class JiraElectronicBoard implements IElectronicBoard {
-    private List<Ticket> tickets;
     private final IJiraService jiraService;
 
     public JiraElectronicBoard(IJiraService jiraService) {
         this.jiraService = jiraService;
     }
 
-    public void populate(List<Ticket> tickets) {
-        this.tickets = tickets;
-    }
-
-    public void sync() throws Exception {
-        for (Ticket ticket : this.tickets) {
+    public void sync(List<Ticket> tickets) throws Exception {
+        for (Ticket ticket : tickets) {
             String currentStatus = this.jiraService.getCurrentStatus(ticket.getId());
             Queue<String> transitions = this.getTransitions(currentStatus, ticket.getStatus());
 
