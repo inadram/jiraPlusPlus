@@ -25,7 +25,12 @@ public class QrCode implements iQrCode {
 			throws NotFoundException {
 		Hashtable<DecodeHintType, Object> hints = new Hashtable<>();
 		hints.put(DecodeHintType.TRY_HARDER, BarcodeFormat.QR_CODE);
-		return multiReader.decodeMultiple(binaryBitmap, hints);
+        Result[] results = multiReader.decodeMultiple(binaryBitmap, hints);
+        for (int i = 0;  i < results.length; ++i) {
+            Result result = results[i];
+            System.out.println("Result[" + i + "]: " + result.getText() + " offset: " + result.getResultPoints()[0].getY());
+        }
+		return results;
 	}
 
 }

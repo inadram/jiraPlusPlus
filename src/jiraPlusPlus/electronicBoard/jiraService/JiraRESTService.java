@@ -64,25 +64,25 @@ public class JiraRESTService implements IJiraService {
         return performHttpsRequest(getUrl, "", "GET");
     }
 
-    private JSONObject performHttpsRequest(String postUrl, String data, String method) throws Exception {
+    private JSONObject performHttpsRequest(String postUrl, String data, String method) {
         long startTime = System.currentTimeMillis();
-        URL url = new URL(postUrl);
-        HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
-
-        con.setRequestMethod(method);
-
-        if (data.length() > 0) {
-            con.setRequestProperty("Content-Type", "application/json; charset=utf8");
-            con.setDoOutput(true);
-            DataOutputStream outputStream = new DataOutputStream(con.getOutputStream());
-            outputStream.writeBytes(data);
-            outputStream.flush();
-            outputStream.close();
-        }
-
         JSONObject resultObject = new JSONObject();
 
         try {
+            URL url = new URL(postUrl);
+            HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+
+            con.setRequestMethod(method);
+
+            if (data.length() > 0) {
+                con.setRequestProperty("Content-Type", "application/json; charset=utf8");
+                con.setDoOutput(true);
+                DataOutputStream outputStream = new DataOutputStream(con.getOutputStream());
+                outputStream.writeBytes(data);
+                outputStream.flush();
+                outputStream.close();
+            }
+
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
             String inputLine;
             StringBuilder responseBuilder = new StringBuilder();

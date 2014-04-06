@@ -29,7 +29,6 @@ public class TestMapping {
 	@Test
 	public void testGivingABinaryImageWithOneTicketItShouldReturnTicketListWithOneImage() throws Exception{
 		QrCode qrCode=new QrCode(new FakeQRCodeMultiReader());
-		FakeQRCodeMultiReader fakeQRCodeMultiReader =mock(FakeQRCodeMultiReader.class);
 		List<Ticket> actualTicketList = qrCode.getTickets(null, new QrCodeToTicket());
 		List<Ticket> expectedTicketList = new ArrayList<>();
 		expectedTicketList.add(new Ticket("someId","ToDo"));
