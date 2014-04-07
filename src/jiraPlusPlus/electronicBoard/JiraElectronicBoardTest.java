@@ -42,7 +42,7 @@ public class JiraElectronicBoardTest {
         List<Ticket> tickets = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
-            tickets.add(new Ticket("Key" + i, "Status" + i));
+//            tickets.add(new Ticket("Key" + i, "Status" + i));
         }
 
         return tickets;

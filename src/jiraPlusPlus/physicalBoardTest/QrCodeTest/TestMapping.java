@@ -31,7 +31,7 @@ public class TestMapping {
 		QrCode qrCode=new QrCode(new FakeQRCodeMultiReader());
 		List<Ticket> actualTicketList = qrCode.getTickets(null, new QrCodeToTicket());
 		List<Ticket> expectedTicketList = new ArrayList<>();
-		expectedTicketList.add(new Ticket("someId","ToDo"));
+//		expectedTicketList.add(new Ticket("someId","ToDo"));
 		Assert.assertEquals(actualTicketList, expectedTicketList);
 	}
 }

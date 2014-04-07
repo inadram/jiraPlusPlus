@@ -30,7 +30,7 @@ public class Application {
                 System.out.println(jsonArray.toString());
             } else if (args[0].equalsIgnoreCase("electronic")) {
                 String ticketNumber = args[1];
-                String status = args[2];
+                float status = Float.parseFloat(args[2]);
 
                 List<Ticket> tickets = new ArrayList<>();
                 Ticket ticket = new Ticket(ticketNumber, status);
