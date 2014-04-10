@@ -18,7 +18,9 @@ public class QrCode implements iQrCode {
 	}
 
 	public List<Ticket> getTickets(BinaryBitmap binaryBitmap, iQrCodeToTicket qrCodeToTicket) throws Exception {
-		return qrCodeToTicket.mapQrCodeToTicket(getQRCodeList(binaryBitmap));
+        Result[] qrCodeList = getQRCodeList(binaryBitmap);
+        List<Ticket> tickets = qrCodeToTicket.mapQrCodeToTicket(qrCodeList);
+		return tickets;
 	}
 
 	private Result[] getQRCodeList(BinaryBitmap binaryBitmap)
@@ -26,10 +28,6 @@ public class QrCode implements iQrCode {
 		Hashtable<DecodeHintType, Object> hints = new Hashtable<>();
 		hints.put(DecodeHintType.TRY_HARDER, BarcodeFormat.QR_CODE);
         Result[] results = multiReader.decodeMultiple(binaryBitmap, hints);
-        for (int i = 0;  i < results.length; ++i) {
-            Result result = results[i];
-            System.out.println("Result[" + i + "]: " + result.getText() + " offset: " + result.getResultPoints()[0].getY());
-        }
 		return results;
 	}
 

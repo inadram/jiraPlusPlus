@@ -2,21 +2,27 @@ package jiraPlusPlus;
 
 public class ColumnHeader {
 	private String id;
-	private float position;
+	private float x;
+	private float y;
 
-	public ColumnHeader(String id, float position) throws Exception {
+	public ColumnHeader(String id, float x, float y) throws Exception {
 		if (id.trim().length() < 1) {
 			throw new Exception("Header Id cannot be empty");
 		}
 		this.id = id;
-		this.position = position;
+		this.x = x;
+		this.y = y;
 	}
 
 	public String getId() {
 		return this.id;
 	}
 
-	public float getPosition() {
-		return this.position;
+	public float getX() {
+		return this.x;
 	}
+
+    public float getY() {
+        return this.y;
+    }
 }
