@@ -3,14 +3,16 @@ package jiraPlusPlus;
 public class Ticket {
 	private String id;
 	private String status;
-	private float position;
+	private float x;
+	private float y;
 
-	public Ticket(String id, float position) throws Exception {
+	public Ticket(String id, float x, float y) throws Exception {
 		if (id.trim().length() < 1) {
 			throw new Exception("Ticket Id cannot be empty");
 		}
 		this.id = id;
-		this.position = position;
+		this.x = x;
+        this.y = y;
 	}
 
 	public String getId() {
@@ -25,7 +27,11 @@ public class Ticket {
 		return this.status;
 	}
 
-	public float getPosition() {
-		return this.position;
+	public float getX() {
+		return this.x;
 	}
+
+    public float getY() {
+        return this.y;
+    }
 }

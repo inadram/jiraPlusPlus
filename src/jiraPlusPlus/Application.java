@@ -25,15 +25,13 @@ public class Application {
             long startTime = System.currentTimeMillis();
             if (args[0].equalsIgnoreCase("physical")) {
                 iPhysicalBoard ph = new PhysicalBoard(new ImageUtility(), new QrCode(new QRCodeMultiReader()));
-                List<Ticket> tickets = ph.getTicketsOfImage(new File("1.jpg"));
-                JSONArray jsonArray = new JSONArray(Arrays.asList(tickets));
-                System.out.println(jsonArray.toString());
+                List<Ticket> tickets = ph.getTicketsOfImage(new File(args[1]));
             } else if (args[0].equalsIgnoreCase("electronic")) {
                 String ticketNumber = args[1];
-                float status = Float.parseFloat(args[2]);
-
+                String status = args[2];
                 List<Ticket> tickets = new ArrayList<>();
-                Ticket ticket = new Ticket(ticketNumber, status);
+                Ticket ticket = new Ticket(ticketNumber, 0f, 0f);
+                ticket.setStatus(status);
                 tickets.add(ticket);
 
                 IJiraService jiraService = new JiraRESTService("https://jira.dev.bbc.co.uk/rest/api/2/", "/home/pi/personal.p12", "/home/pi/jssecacerts", "password");
