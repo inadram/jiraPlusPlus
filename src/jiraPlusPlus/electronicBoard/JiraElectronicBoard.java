@@ -1,5 +1,6 @@
 package jiraPlusPlus.electronicBoard;
 
+import jiraPlusPlus.Print;
 import jiraPlusPlus.Ticket;
 import jiraPlusPlus.electronicBoard.jiraService.IJiraService;
 
@@ -11,19 +12,22 @@ import java.util.Queue;
 
 public class JiraElectronicBoard implements IElectronicBoard {
     private final IJiraService jiraService;
+	private final Print print = new Print();
 
-    public JiraElectronicBoard(IJiraService jiraService) {
+	public JiraElectronicBoard(IJiraService jiraService) {
         this.jiraService = jiraService;
     }
 
     public void sync(List<Ticket> tickets) throws Exception {
         for (Ticket ticket : tickets) {
             Queue<String> transitions = getTransitions(ticket);
-            performTransitions(ticket, transitions);
-        }
+			performTransitions(ticket, transitions);
+		}
+		print.printCurrentTicketBoardToConsole();
+		print.printUpdatedTicketBoardToConsole();
     }
 
-    private void performTransitions(Ticket ticket, Queue<String> transitions) {
+	private void performTransitions(Ticket ticket, Queue<String> transitions) {
         while (transitions.size() > 0) {
             String transition = transitions.remove();
             try {
@@ -39,11 +43,15 @@ public class JiraElectronicBoard implements IElectronicBoard {
     }
 
     private Queue<String> getTransitions(Ticket ticket) throws Exception {
-        String currentStatus = this.jiraService.getCurrentStatus(ticket.getId());
-        Queue<String> transitions = new LinkedList<>();
-        if (currentStatus != "Unknown") {
-            System.out.println("Getting transitions for ticket:  " + ticket.getId() + " transitioning from: " + currentStatus + " to: " + ticket.getStatus());
-            transitions = this.getTransitions(currentStatus, ticket.getStatus());
+		String ticketId = ticket.getId();
+		String currentStatus = this.jiraService.getCurrentStatus(ticketId);
+		String updatedStatus = ticket.getStatus();
+		print.storeCurrentStatusPositions(ticketId, currentStatus);
+		print.storeUpdatedStatusPositions(ticketId, updatedStatus);
+		Queue<String> transitions = new LinkedList<>();
+		if (currentStatus != null && !currentStatus.equals("Unknown") && updatedStatus != null && !updatedStatus.equals("Unknown")) {
+			System.out.println("Getting transitions for ticket:  " + ticketId + " transitioning from: " + currentStatus + " to: " + updatedStatus);
+            transitions = this.getTransitions(currentStatus, updatedStatus);
         }
         return transitions;
     }
