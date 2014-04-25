@@ -29,7 +29,6 @@ public class EmailReader implements IImageLocation {
         Session session = Session.getInstance(this.props, null);
         this.store = session.getStore();
         this.connectToStore();
-        this.connectToInbox();
     }
 
     private void connectToStore() throws MessagingException {
@@ -45,10 +44,7 @@ public class EmailReader implements IImageLocation {
 
     @Override
     public File getOldestUnprocessedImage() throws Exception {
-        if (!inbox.isOpen()) {
-            System.out.println("Inbox is not open");
-            this.connectToInbox();
-        }
+        this.connectToInbox();
 
         Message[] messageList = inbox.getMessages(1, inbox.getMessageCount());
         File file = null;
@@ -63,8 +59,8 @@ public class EmailReader implements IImageLocation {
                 file = writeStreamToFile(is);
                 return file;
             }
-            this.inbox.expunge();
         }
+        inbox.close(true);
 
         return file;
     }
