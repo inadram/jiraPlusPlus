@@ -3,7 +3,7 @@ package jiraPlusPlus.physicalBoardTest.QrCodeTest;
 import jiraPlusPlus.Ticket;
 import jiraPlusPlus.physicalBoard.QrCode.QrCode;
 import jiraPlusPlus.physicalBoard.mapping.QrCodeToTicket;
-import jiraPlusPlus.physicalBoardTest.QrCodeTest.fakes.FakeQRCodeMultiReader;
+import jiraPlusPlus.physicalBoardTest.fakes.FakeQRCodeMultiReader;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
